@@ -1,0 +1,15 @@
+﻿[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "subforge-cli"
+version = "0.2.1"
+description = "Deterministic SRT subtitle timing optimizer, CPS analyzer, and line-wrap processor."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "sebaxpool", email = "sebastian.lagos.g@gmail.com"}]
+
+[project.scripts]
+subforge = "subforge.cli:main"
