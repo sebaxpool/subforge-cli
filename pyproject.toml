@@ -11,5 +11,18 @@ requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [{name = "sebaxpool", email = "sebastian.lagos.g@gmail.com"}]
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "hypothesis>=6.100",
+]
+
 [project.scripts]
 subforge = "subforge.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
