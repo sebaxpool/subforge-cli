@@ -1,6 +1,6 @@
+import textwrap
 from collections.abc import Sequence
 from dataclasses import dataclass
-import textwrap
 
 from .models import HTML_TAG_PATTERN, SubtitleCue
 
@@ -52,9 +52,7 @@ def balance_lines(text: str, max_width: int = 42) -> str:
     if not raw_lines:
         return ""
 
-    is_dialogue = len(raw_lines) >= 2 and any(
-        line.startswith("-") for line in raw_lines[1:]
-    )
+    is_dialogue = len(raw_lines) >= 2 and any(line.startswith("-") for line in raw_lines[1:])
     if is_dialogue:
         turns: list[list[str]] = []
         for line in raw_lines:
@@ -62,9 +60,7 @@ def balance_lines(text: str, max_width: int = 42) -> str:
                 turns.append([line])
             else:
                 turns[-1].append(line)
-        return "\n".join(
-            _balance_single_block(" ".join(turn), max_width) for turn in turns
-        )
+        return "\n".join(_balance_single_block(" ".join(turn), max_width) for turn in turns)
 
     return _balance_single_block(" ".join(raw_lines), max_width)
 
@@ -84,9 +80,7 @@ def process_cues(
             continue
         new_start = cue.start.shifted(shift_ms)
         new_end = cue.end.shifted(shift_ms)
-        new_text = (
-            balance_lines(cue.text, max_width=max_width) if reflow else cue.text
-        )
+        new_text = balance_lines(cue.text, max_width=max_width) if reflow else cue.text
         processed.append(
             SubtitleCue(
                 index=len(processed) + 1,

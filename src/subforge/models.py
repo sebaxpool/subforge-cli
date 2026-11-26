@@ -1,5 +1,5 @@
-from dataclasses import dataclass
 import re
+from dataclasses import dataclass
 
 TIMECODE_PATTERN = re.compile(r"^(\d{2,}):(\d{2}):(\d{2}),(\d{3})$")
 HTML_TAG_PATTERN = re.compile(r"</?[a-zA-Z][a-zA-Z0-9]*(?:\s+[^<>]*)?/?>")
@@ -22,9 +22,7 @@ class Timecode:
             raise ValueError(f"Invalid SRT timecode format: {raw}")
         hours, minutes, seconds, millis = map(int, match.groups())
         if minutes >= 60 or seconds >= 60:
-            raise ValueError(
-                f"Minutes and seconds must be between 00 and 59: {raw}"
-            )
+            raise ValueError(f"Minutes and seconds must be between 00 and 59: {raw}")
         total = (((hours * 60 + minutes) * 60) + seconds) * 1000 + millis
         return cls(total_ms=total)
 

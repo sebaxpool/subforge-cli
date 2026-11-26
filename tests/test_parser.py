@@ -1,5 +1,6 @@
 import pytest
-from hypothesis import given, strategies as st
+from hypothesis import given
+from hypothesis import strategies as st
 
 from subforge.models import SubtitleCue, Timecode
 from subforge.parser import parse_srt, serialize_srt
@@ -25,9 +26,7 @@ class TestParseSrt:
         assert cues[0] == SubtitleCue(
             1, Timecode(1000), Timecode(2500), "Primera línea\nSegunda línea"
         )
-        assert cues[1] == SubtitleCue(
-            2, Timecode(3000), Timecode(4000), "Con CR antiguo"
-        )
+        assert cues[1] == SubtitleCue(2, Timecode(3000), Timecode(4000), "Con CR antiguo")
 
     def test_skips_blocks_without_dialogue_and_reindexes(self) -> None:
         raw = (
@@ -49,9 +48,7 @@ class TestParseSrt:
         raw = "120:00:00,000 --> 120:00:02,000\nMaratón larga"
         cues = parse_srt(raw)
         assert cues == [
-            SubtitleCue(
-                1, Timecode(432_000_000), Timecode(432_002_000), "Maratón larga"
-            )
+            SubtitleCue(1, Timecode(432_000_000), Timecode(432_002_000), "Maratón larga")
         ]
 
     @pytest.mark.parametrize(
@@ -115,9 +112,7 @@ _cue_strategy = st.builds(
 
 class TestParserProperties:
     @given(cues=st.lists(_cue_strategy, max_size=15))
-    def test_serialize_parse_roundtrip_preserves_cues(
-        self, cues: list[SubtitleCue]
-    ) -> None:
+    def test_serialize_parse_roundtrip_preserves_cues(self, cues: list[SubtitleCue]) -> None:
         serialized = serialize_srt(cues)
         reparsed = parse_srt(serialized)
         expected = [

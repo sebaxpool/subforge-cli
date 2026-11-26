@@ -1,6 +1,6 @@
 import argparse
-from pathlib import Path
 import sys
+from pathlib import Path
 
 from . import __version__
 from .parser import parse_srt, serialize_srt
@@ -14,15 +14,9 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("input", type=Path, help="Path to source .srt file")
     parser.add_argument("-o", "--output", type=Path, help="Path to output .srt file")
-    parser.add_argument(
-        "--shift-ms", type=int, default=0, help="Millisecond offset (+/-)"
-    )
-    parser.add_argument(
-        "--max-width", type=int, default=42, help="Max characters per line"
-    )
-    parser.add_argument(
-        "--max-cps", type=float, default=20.0, help="Max characters per second"
-    )
+    parser.add_argument("--shift-ms", type=int, default=0, help="Millisecond offset (+/-)")
+    parser.add_argument("--max-width", type=int, default=42, help="Max characters per line")
+    parser.add_argument("--max-cps", type=float, default=20.0, help="Max characters per second")
     parser.add_argument(
         "--encoding",
         default="utf-8-sig",
@@ -80,9 +74,7 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.audit_only:
         try:
-            issues = audit_readability(
-                cues, max_cps=args.max_cps, max_width=args.max_width
-            )
+            issues = audit_readability(cues, max_cps=args.max_cps, max_width=args.max_width)
         except ValueError as exc:
             print(f"Error: {exc}", file=sys.stderr)
             return 1

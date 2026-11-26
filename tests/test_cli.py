@@ -35,9 +35,7 @@ class TestCliHappyPath:
         assert "00:00:01,500 --> 00:00:04,500" in result
         assert "Primera línea Segunda línea" in result
 
-    def test_custom_output_and_no_reflow_preserves_line_breaks(
-        self, tmp_path: Path
-    ) -> None:
+    def test_custom_output_and_no_reflow_preserves_line_breaks(self, tmp_path: Path) -> None:
         src = tmp_path / "input.srt"
         dst = tmp_path / "custom.srt"
         src.write_text(VALID_SRT, encoding="utf-8")
@@ -101,9 +99,7 @@ class TestCliHappyPath:
         assert main([str(legacy_file), "--encoding", "cp1252", "-o", str(out_file)]) == 0
         assert "¡Mañana será un gran día!" in out_file.read_text(encoding="utf-8")
 
-    def test_version_flag_prints_package_version(
-        self, capsys: pytest.CaptureFixture[str]
-    ) -> None:
+    def test_version_flag_prints_package_version(self, capsys: pytest.CaptureFixture[str]) -> None:
         with pytest.raises(SystemExit) as exc:
             main(["--version"])
         assert exc.value.code == 0
