@@ -1,7 +1,8 @@
 from dataclasses import FrozenInstanceError
 
 import pytest
-from hypothesis import given, strategies as st
+from hypothesis import given
+from hypothesis import strategies as st
 
 from subforge.models import SubtitleCue, Timecode
 
@@ -116,9 +117,7 @@ class TestModelsProperties:
         duration_ms=st.integers(min_value=1, max_value=600_000),
         text=st.text(max_size=200),
     )
-    def test_subtitle_cue_invariants(
-        self, start_ms: int, duration_ms: int, text: str
-    ) -> None:
+    def test_subtitle_cue_invariants(self, start_ms: int, duration_ms: int, text: str) -> None:
         cue = SubtitleCue(
             index=1,
             start=Timecode(start_ms),

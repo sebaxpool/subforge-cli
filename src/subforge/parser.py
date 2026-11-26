@@ -1,12 +1,10 @@
-from collections.abc import Sequence
 import re
+from collections.abc import Sequence
 
 from .models import SubtitleCue, Timecode
 
 BLOCK_SPLIT_REGEX = re.compile(r"\n(?:[ \t]*\n)+")
-HEADER_REGEX = re.compile(
-    r"^(\d{2,}:\d{2}:\d{2},\d{3})\s*-->\s*(\d{2,}:\d{2}:\d{2},\d{3})$"
-)
+HEADER_REGEX = re.compile(r"^(\d{2,}:\d{2}:\d{2},\d{3})\s*-->\s*(\d{2,}:\d{2}:\d{2},\d{3})$")
 
 
 def _normalize_newlines(text: str) -> str:
@@ -34,16 +32,12 @@ def parse_srt(content: str) -> list[SubtitleCue]:
 
         header_line_idx = 1 if lines[0].isdigit() else 0
         if header_line_idx >= len(lines):
-            raise ValueError(
-                f"Malformed SRT block {fallback_idx}: missing timing header"
-            )
+            raise ValueError(f"Malformed SRT block {fallback_idx}: missing timing header")
 
         header_line = lines[header_line_idx]
         match = HEADER_REGEX.match(header_line)
         if not match:
-            raise ValueError(
-                f"Malformed timing header in block {fallback_idx}: {header_line!r}"
-            )
+            raise ValueError(f"Malformed timing header in block {fallback_idx}: {header_line!r}")
 
         start_tc = Timecode.from_srt(match.group(1))
         end_tc = Timecode.from_srt(match.group(2))

@@ -15,6 +15,7 @@ authors = [{name = "sebaxpool", email = "sebastian.lagos.g@gmail.com"}]
 dev = [
     "pytest>=8.0",
     "hypothesis>=6.100",
+    "ruff>=0.8",
 ]
 
 [project.scripts]
@@ -26,3 +27,10 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-ra"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

@@ -1,5 +1,6 @@
 import pytest
-from hypothesis import given, strategies as st
+from hypothesis import given
+from hypothesis import strategies as st
 
 from subforge.models import SubtitleCue, Timecode
 from subforge.processor import (
@@ -23,10 +24,7 @@ class TestBalanceLines:
         assert balance_lines(word, max_width=10) == word
 
     def test_balances_two_lines_within_max_width(self) -> None:
-        raw = (
-            "This subtitle line is definitely longer than "
-            "forty two characters in total."
-        )
+        raw = "This subtitle line is definitely longer than forty two characters in total."
         lines = balance_lines(raw, max_width=42).splitlines()
         assert len(lines) == 2
         assert all(len(line) <= 42 for line in lines)
